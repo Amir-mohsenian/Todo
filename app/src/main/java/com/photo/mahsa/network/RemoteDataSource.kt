@@ -4,6 +4,8 @@ interface RemoteDataSource {
 
 }
 
-class RemoteDataSourceImp: RemoteDataSource {
+class RemoteDataSourceImp(
+    private val service: Service
+): RemoteDataSource {
 
 }

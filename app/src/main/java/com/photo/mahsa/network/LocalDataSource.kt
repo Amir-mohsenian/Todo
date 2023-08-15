@@ -4,6 +4,6 @@ interface LocalDataSource {
 
 }
 
-interface LocalDataSourceImp: LocalDataSource {
+class LocalDataSourceImp: LocalDataSource {
 
 }
