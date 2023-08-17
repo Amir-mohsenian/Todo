@@ -9,19 +9,8 @@ import com.photo.mahsa.ui.theme.MahsaTheme
 fun HomeRoute(
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.FACTORY)
 ) {
+    val pagingPhotoItems = viewModel.photoPages.collectA
     HomeScreen()
 }
 
-@Composable
-fun HomeScreen() {
-
-}
-
-@Preview
-@Composable
-fun HomeScreenPreview() {
-    MahsaTheme {
-        HomeScreen()
-    }
-}
 

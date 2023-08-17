@@ -71,7 +71,13 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-    
+
+    //paging3
+    val paging_version = "3.2.0"
+    implementation("androidx.paging:paging-runtime-ktx:$paging_version")
+    testImplementation("androidx.paging:paging-common-ktx:$paging_version")
+    implementation("androidx.paging:paging-compose:3.2.0")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

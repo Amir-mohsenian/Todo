@@ -6,11 +6,13 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.paging.PagingData
 import com.photo.mahsa.App
 import com.photo.mahsa.data.Repository
 import com.photo.mahsa.model.Photo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
 class HomeViewModel(
@@ -20,6 +22,8 @@ class HomeViewModel(
     private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _uiState.value)
 
+    val photoPages: StateFlow<PagingData<Photo>?> = repository.loadPhotos(20)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     companion object {
         val FACTORY: ViewModelProvider.Factory = viewModelFactory {
             initializer {
