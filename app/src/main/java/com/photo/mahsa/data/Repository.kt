@@ -17,12 +17,17 @@ interface Repository {
 class RepositoryImp(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
-): Repository {
+) : Repository {
     override fun loadPhotos(pageSize: Int): Flow<PagingData<Photo>> {
-        return remoteDataSource.loadPhotos(pageSize).map { it.map { photoNetwork: PhotoNetwork -> Photo(
-            photoNetwork.id,
-            photoNetwork.urls.regular,
-            false
-        ) } }
+        return remoteDataSource.loadPhotos(pageSize)
+            .map {
+                it.map { photoNetwork: PhotoNetwork ->
+                    Photo(
+                        photoNetwork.id,
+                        photoNetwork.urls.regular,
+                        false
+                    )
+                }
+            }
     }
 }

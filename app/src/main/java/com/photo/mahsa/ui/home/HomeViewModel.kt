@@ -19,11 +19,7 @@ class HomeViewModel(
     private val repository: Repository
 ): ViewModel() {
 
-    private val _uiState = MutableStateFlow(UiState())
-    val uiState = _uiState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _uiState.value)
-
-    val photoPages: StateFlow<PagingData<Photo>?> = repository.loadPhotos(20)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+    val photoPages = repository.loadPhotos(20)
     companion object {
         val FACTORY: ViewModelProvider.Factory = viewModelFactory {
             initializer {

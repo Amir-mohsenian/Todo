@@ -25,8 +25,7 @@ fun PhotoNavHost(
         composable(
             route = HOME_ROUTE
         ) {
-            HomeRoute(
-            )
+            HomeRoute()
         }
 
         composable(
