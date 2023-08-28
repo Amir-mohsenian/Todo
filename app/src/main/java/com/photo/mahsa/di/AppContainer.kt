@@ -5,10 +5,11 @@ import com.photo.mahsa.network.LocalDataSourceImp
 import com.photo.mahsa.network.RemoteDataSourceImp
 import com.photo.mahsa.network.Service
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val BASE_URL = "https://api.unsplash.com/photos/"
+private const val BASE_URL = "https://api.unsplash.com/"
 class AppContainer {
 
     private val networkService = provideNetworkService()
@@ -19,7 +20,9 @@ class AppContainer {
 }
 
 private fun provideOkHttpClient(): OkHttpClient {
-    return OkHttpClient().newBuilder().build()
+    val interceptor = HttpLoggingInterceptor()
+    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+    return OkHttpClient().newBuilder().addInterceptor(interceptor).build()
 }
 private fun provideRetrofit() =
     Retrofit.

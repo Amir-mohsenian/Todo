@@ -19,7 +19,7 @@ class HomeViewModel(
     private val repository: Repository
 ): ViewModel() {
 
-    val photoPages = repository.loadPhotos(20)
+    val photoPages = repository.loadPhotos(3)
     companion object {
         val FACTORY: ViewModelProvider.Factory = viewModelFactory {
             initializer {

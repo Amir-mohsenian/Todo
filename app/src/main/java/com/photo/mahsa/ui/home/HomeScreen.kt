@@ -1,13 +1,17 @@
 package com.photo.mahsa.ui.home
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,17 +32,14 @@ import com.photo.mahsa.ui.theme.MahsaTheme
 fun HomeScreen(
     pagingPhotos: LazyPagingItems<Photo>
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        LazyVerticalStaggeredGrid(
-            columns = StaggeredGridCells.Fixed(2),
+    Column(modifier = Modifier.fillMaxSize()) {
+        if (pagingPhotos.loadState.refresh == LoadState.Loading) {
+            LinearProgressIndicator(color = Color.Blue, modifier = Modifier.fillMaxWidth())
+        }
+
+        LazyColumn(
             modifier = Modifier.fillMaxSize(),
         ) {
-
-            if (pagingPhotos.loadState.refresh == LoadState.Loading) {
-                item {
-                    LinearProgressIndicator(color = Color.Blue, modifier = Modifier.fillMaxWidth())
-                }
-            }
 
             items(count = pagingPhotos.itemCount) {
                 val item = pagingPhotos[it]
@@ -47,8 +48,7 @@ fun HomeScreen(
                         item?.url
                     },
                     contentDescription = null,
-                    modifier = Modifier
-                        .height(if (it % 2 == 0) 150.dp else 200.dp)
+                    modifier = Modifier.size(100.dp)
                         .padding(horizontal = 2.dp, vertical = 4.dp),
                     contentScale = ContentScale.Crop
                 )

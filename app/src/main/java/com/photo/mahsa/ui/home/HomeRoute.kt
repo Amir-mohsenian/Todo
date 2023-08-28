@@ -10,6 +10,7 @@ fun HomeRoute(
 ) {
     val pagingPhotoItems = viewModel.photoPages.collectAsLazyPagingItems()
 
+
     HomeScreen(pagingPhotoItems)
 }
 

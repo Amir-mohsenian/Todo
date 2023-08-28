@@ -13,6 +13,8 @@ class PhotosPagingSource(
         try {
             val nextPageNumber = params.key ?: 1
             val response = service.loadPhotosByPage(
+                page = nextPageNumber,
+                clientId = "ofL_RZuAUkhc6fRkUM4I63owhLO7l5ZFkHcn5M2yXmc"
             )
 
             return LoadResult.Page(
@@ -29,9 +31,6 @@ class PhotosPagingSource(
     }
 
     override fun getRefreshKey(state: PagingState<Int, PhotoNetwork>): Int? {
-        return state.anchorPosition?.let { anchorPosition ->
-            val anchorPage = state.closestPageToPosition(anchorPosition)
-            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
-        }
+        return null
     }
 }
