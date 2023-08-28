@@ -18,4 +18,6 @@ data class PhotoNetwork(
     val location: Location?,
     val tags: List<Tag>,
     val urls: PhotoUrls,
-)
+) {
+
+}

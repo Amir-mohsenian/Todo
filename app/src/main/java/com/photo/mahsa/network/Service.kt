@@ -8,10 +8,7 @@ import retrofit2.http.Query
 
 
 interface Service {
-    @GET("photos")
+    @GET("?client_id=ofL_RZuAUkhc6fRkUM4I63owhLO7l5ZFkHcn5M2yXmc")
     suspend fun loadPhotosByPage(
-        @Query("page") page: Int,
-        @Query("per_page") perPage: Int,
-        @Query("order_by") orderBy: String = NETWORK_LATEST_ORDER
     ): Response<List<PhotoNetwork>?>
 }

@@ -13,8 +13,6 @@ class PhotosPagingSource(
         try {
             val nextPageNumber = params.key ?: 1
             val response = service.loadPhotosByPage(
-                page = nextPageNumber,
-                perPage = params.loadSize
             )
 
             return LoadResult.Page(

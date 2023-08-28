@@ -2,46 +2,61 @@ package com.photo.mahsa.ui.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.paging.CombinedLoadStates
+import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.photo.mahsa.model.Photo
 import com.photo.mahsa.model.PreviewPagingDataFlow
 import com.photo.mahsa.ui.theme.MahsaTheme
-import kotlinx.coroutines.flow.collect
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun HomeScreen(
     pagingPhotos: LazyPagingItems<Photo>
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(2),
             modifier = Modifier.fillMaxSize(),
         ) {
 
             if (pagingPhotos.loadState.refresh == LoadState.Loading) {
                 item {
-                    Text(text = "Refresh Loading")
+                    LinearProgressIndicator(color = Color.Blue, modifier = Modifier.fillMaxWidth())
                 }
             }
 
             items(count = pagingPhotos.itemCount) {
                 val item = pagingPhotos[it]
-                
-                Text(text = item?.url ?: "null")
+                GlideImage(
+                    model = {
+                        item?.url
+                    },
+                    contentDescription = null,
+                    modifier = Modifier
+                        .height(if (it % 2 == 0) 150.dp else 200.dp)
+                        .padding(horizontal = 2.dp, vertical = 4.dp),
+                    contentScale = ContentScale.Crop
+                )
             }
 
             if (pagingPhotos.loadState.append == LoadState.Loading) {
                 item {
-                    Text(text = "New Items is adding")
+                   // Text(text = "New Items is adding")
                 }
             }
         }
