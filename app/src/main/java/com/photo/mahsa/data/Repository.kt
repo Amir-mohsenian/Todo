@@ -1,10 +1,8 @@
 package com.photo.mahsa.data
 
-import android.util.Log
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.photo.mahsa.model.Photo
-import com.photo.mahsa.network.LocalDataSource
 import com.photo.mahsa.network.RemoteDataSource
 import com.photo.mahsa.network.model.PhotoNetwork
 import kotlinx.coroutines.flow.Flow
@@ -23,10 +21,9 @@ class RepositoryImp(
         return remoteDataSource.loadPhotos(pageSize)
             .map {
                 it.map { photoNetwork: PhotoNetwork ->
-                    Log.i("****LOOOG", "thumb is ${photoNetwork.urls.thumb}")
                     Photo(
                         photoNetwork.id,
-                        photoNetwork.urls.thumb,
+                        photoNetwork.urls.regular,
                         false
                     )
                 }

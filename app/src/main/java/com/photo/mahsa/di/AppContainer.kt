@@ -1,7 +1,7 @@
 package com.photo.mahsa.di
 
 import com.photo.mahsa.data.RepositoryImp
-import com.photo.mahsa.network.LocalDataSourceImp
+import com.photo.mahsa.data.LocalDataSourceImp
 import com.photo.mahsa.network.RemoteDataSourceImp
 import com.photo.mahsa.network.Service
 import okhttp3.OkHttpClient
