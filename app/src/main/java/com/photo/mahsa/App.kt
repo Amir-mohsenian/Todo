@@ -4,5 +4,9 @@ import android.app.Application
 import com.photo.mahsa.di.AppContainer
 
 class App: Application() {
-    val appContainer = AppContainer()
+    lateinit var appContainer: AppContainer
+    override fun onCreate() {
+        super.onCreate()
+        appContainer = AppContainer(applicationContext)
+    }
 }

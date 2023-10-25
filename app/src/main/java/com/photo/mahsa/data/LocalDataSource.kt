@@ -1,17 +1,13 @@
 package com.photo.mahsa.data
 
-import com.photo.mahsa.db.PhotoDao
-import com.photo.mahsa.model.Photo
+import com.photo.mahsa.db.TaskDao
 
 interface LocalDataSource {
-    suspend fun insertPhoto(photo: Photo): Boolean
 }
 
 class LocalDataSourceImp(
-    private val photoDao: PhotoDao
+    private val taskDao: TaskDao
 ) : LocalDataSource {
-    override suspend fun insertPhoto(photo: Photo): Boolean =
-        photoDao.insertPhoto(photo.toPhotoEntity()) == 0L
 
 }
 
