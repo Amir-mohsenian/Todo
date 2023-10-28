@@ -1,18 +1,25 @@
 package com.photo.mahsa.data
 
+import com.photo.mahsa.db.TaskDao
 import com.photo.mahsa.model.Task
-import com.photo.mahsa.network.RemoteDataSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 interface Repository {
-    fun loadTasks(): Flow<Task>
+    fun loadTasks(): Flow<List<Task>>
 }
 
 
-class RepositoryImp(
-) : Repository {
-    override fun loadTasks(): Flow<Task> {
-        return flowOf(Task(1, "title", "description"))
+class RepositoryImp(private val dao: TaskDao) : Repository {
+    override fun loadTasks(): Flow<List<Task>> {
+        return dao.loadTasks().map {
+            it.map { taskEntity ->
+                Task(
+                    id = taskEntity.id ?: 0L,
+                    title = taskEntity.title,
+                    desc = taskEntity.desc
+                )
+            }
+        }
     }
 }

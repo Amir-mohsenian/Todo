@@ -10,22 +10,22 @@ import com.photo.mahsa.App
 import com.photo.mahsa.data.Repository
 import com.photo.mahsa.model.Task
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val repository: Repository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Error(""))
-    val uiState = _uiState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-
-           // _uiState.value = UiState.Success(data = data)
-        }
-    }
+    val uiState: StateFlow<UiState> = repository.loadTasks()
+        .map { UiState.Success(it) }
+        .onStart { UiState.Loading }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState.Loading)
 
     companion object {
         val FACTORY: ViewModelProvider.Factory = viewModelFactory {
