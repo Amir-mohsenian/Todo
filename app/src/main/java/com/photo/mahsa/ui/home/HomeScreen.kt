@@ -2,21 +2,47 @@ package com.photo.mahsa.ui.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.photo.mahsa.model.Task
+import com.photo.mahsa.ui.component.ImmutableTaskCard
 import com.photo.mahsa.ui.theme.MahsaTheme
 
 @Composable
 fun HomeScreen(
-    uiState: UiState
+    uiState: UiState,
+    onSelectedTask: (Task) -> Unit
 ) {
-    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
+        when (uiState) {
+            is UiState.Loading -> {
+                CircularProgressIndicator(modifier = Modifier.size(58.dp))
+            }
 
+            is UiState.Error -> {
+                Text(text = "Error is ${uiState.message}")
+            }
+
+            is UiState.Success -> {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(uiState.tasks) { task ->
+                        ImmutableTaskCard(task = task, onClick = onSelectedTask)
+                    }
+                }
+            }
+        }
     }
 }
 

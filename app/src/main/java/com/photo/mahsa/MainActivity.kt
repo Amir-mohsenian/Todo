@@ -5,8 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AddCircle
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -18,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.photo.mahsa.navigation.DETAIL_ROUTE
 import com.photo.mahsa.navigation.PhotoNavHost
 import com.photo.mahsa.ui.theme.MahsaTheme
 
@@ -37,7 +42,7 @@ class MainActivity : ComponentActivity() {
                             NavigationDrawerItem(
                                 label = { Text(text = "Drawer Item") },
                                 selected = false,
-                                onClick = {  }
+                                onClick = { }
                             )
                         }
                     }) {
@@ -45,11 +50,20 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         topBar = {},
                         bottomBar = {},
-                        floatingActionButton = {},
+                        floatingActionButton = {
+                            ExtendedFloatingActionButton(onClick = {
+                                  navController.navigate(DETAIL_ROUTE)
+                            }) {
+                                Text(text = "New Task")
+                                Icon(imageVector = Icons.Rounded.AddCircle, contentDescription = null)
+                            }
+                        },
                         content = { innerPadding ->
-                            PhotoNavHost(navController = navController, modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize())
+                            PhotoNavHost(
+                                navController = navController, modifier = Modifier
+                                    .padding(innerPadding)
+                                    .fillMaxSize()
+                            )
                         }
                     )
                 }

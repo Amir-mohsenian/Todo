@@ -15,7 +15,7 @@ const val DETAIL_ROUTE = "detail_route"
 fun PhotoNavHost(
     navController: NavHostController,
     modifier: Modifier,
-    startDest: String = "home_route",
+    startDest: String = HOME_ROUTE,
 ) {
     NavHost(
         navController = navController,
