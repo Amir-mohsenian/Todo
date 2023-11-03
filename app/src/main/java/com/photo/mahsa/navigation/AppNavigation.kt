@@ -15,7 +15,7 @@ const val DETAIL_ROUTE = "detail_route"
 fun TaskNavHost(
     navController: NavHostController,
     modifier: Modifier,
-    startDest: String = DETAIL_ROUTE,
+    startDest: String = HOME_ROUTE,
 ) {
     NavHost(
         navController = navController,
