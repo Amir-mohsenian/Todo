@@ -21,17 +21,21 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.photo.mahsa.navigation.DETAIL_ROUTE
-import com.photo.mahsa.navigation.PhotoNavHost
+import com.photo.mahsa.navigation.HOME_ROUTE
+import com.photo.mahsa.navigation.TaskNavHost
 import com.photo.mahsa.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
@@ -44,6 +48,14 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
+                var showFab by remember {
+                    mutableStateOf(true)
+                }
+
+                navController.addOnDestinationChangedListener { _, destination, _ ->
+                    showFab = destination.route == HOME_ROUTE
+                }
+
                 ModalNavigationDrawer(
                     drawerState = drawerState,
                     drawerContent = {
@@ -84,18 +96,20 @@ class MainActivity : ComponentActivity() {
                         },
                         bottomBar = {},
                         floatingActionButton = {
-                            ExtendedFloatingActionButton(onClick = {
-                                navController.navigate(DETAIL_ROUTE)
-                            }) {
-                                Text(text = "New Task")
-                                Icon(
-                                    imageVector = Icons.Rounded.AddCircle,
-                                    contentDescription = null
-                                )
+                            if (showFab) {
+                                ExtendedFloatingActionButton(onClick = {
+                                    navController.navigate(DETAIL_ROUTE)
+                                }) {
+                                    Text(text = "New Task")
+                                    Icon(
+                                        imageVector = Icons.Rounded.AddCircle,
+                                        contentDescription = null
+                                    )
+                                }
                             }
                         },
                         content = { innerPadding ->
-                            PhotoNavHost(
+                            TaskNavHost(
                                 navController = navController, modifier = Modifier
                                     .padding(innerPadding)
                                     .fillMaxSize()

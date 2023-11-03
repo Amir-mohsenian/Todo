@@ -6,8 +6,12 @@ import com.photo.mahsa.model.Task
 import com.photo.mahsa.ui.home.HomeViewModel
 
 @Composable
-fun EditTaskRoute(
+fun AddEditTaskRoute(
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.FACTORY),
-    selectedTask: Task) {
-    EditTaskScreen(task = selectedTask, onUpdateTask = viewModel::updateTask)
+    selectedTask: Task?,
+    onBackAction: () -> Unit) {
+    AddEditTaskScreen(task = selectedTask, onUpdateTask = {
+        viewModel.updateTask(it)
+        onBackAction()
+    })
 }

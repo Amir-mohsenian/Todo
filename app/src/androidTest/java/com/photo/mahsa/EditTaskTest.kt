@@ -8,9 +8,9 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
-import com.photo.mahsa.ui.detail.EditTaskRoute
+import com.photo.mahsa.ui.detail.AddEditTaskRoute
 import com.photo.mahsa.ui.home.HomeViewModel
-import com.photo.mahsa.ui.theme.MahsaTheme
+import com.photo.mahsa.ui.theme.AppTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
@@ -24,8 +24,8 @@ class EditTaskTest {
     @Test
     fun changeTaskTitle() {
         composeTestRule.setContent {
-            MahsaTheme {
-                EditTaskRoute(selectedTask = TestModel.fakeTaskList.first(), viewModel = HomeViewModel(testRepository))
+            AppTheme {
+                AddEditTaskRoute(selectedTask = TestModel.fakeTaskList.first(), viewModel = HomeViewModel(testRepository), onBackAction = {})
             }
         }
 

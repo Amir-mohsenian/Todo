@@ -39,7 +39,13 @@ class HomeViewModel(
 
     fun updateTask(task: Task) {
         viewModelScope.launch {
-            repository.updateTask(task)
+            with(repository) {
+                if (task.id != null) {
+                    updateTask(task)
+                } else {
+                    addTask(task)
+                }
+            }
         }
     }
 

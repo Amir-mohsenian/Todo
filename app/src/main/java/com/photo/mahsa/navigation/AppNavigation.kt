@@ -5,8 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.photo.mahsa.model.Task
-import com.photo.mahsa.ui.detail.EditTaskRoute
+import com.photo.mahsa.ui.detail.AddEditTaskRoute
 import com.photo.mahsa.ui.home.HomeRoute
 
 const val HOME_ROUTE = "home_route"
@@ -31,8 +30,9 @@ fun TaskNavHost(
         composable(
             route = DETAIL_ROUTE
         ) {
-          //  val viewModel = viewModel(factory = HomeViewModel.FACTORY)
-            EditTaskRoute(selectedTask = Task(1L, "title", "desc"))
+            AddEditTaskRoute(selectedTask = null) {
+                navController.navigateUp()
+            }
         }
     }
 }

@@ -45,7 +45,7 @@ fun HomeScreen(
                     state = listState,
                     contentPadding = PaddingValues(top = 8.dp, bottom = 48.dp, start = 8.dp, end = 8.dp),
                 ) {
-                    items(uiState.tasks, key = { key -> key.id}) { task ->
+                    items(uiState.tasks, key = { key -> key.id!!}) { task ->
                         ImmutableTaskCard(modifier = Modifier.padding(top = 10.dp).padding(horizontal = 4.dp),task = task, onClick = onSelectedTask)
                     }
                 }
