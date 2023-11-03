@@ -17,5 +17,8 @@ class AppContainer(context: Context) {
     private val roomDb = Room.databaseBuilder(context, AppDatabase::class.java, "mahsa-db")
  //   private val localDataSource = LocalDataSourceImp(roomDb.build().photoDao())
 
-    val repository = RepositoryImp()
+    val repository = RepositoryImp(provideTaskDao())
+
+    private fun provideTaskDao() = roomDb.build().taskDao()
 }
+

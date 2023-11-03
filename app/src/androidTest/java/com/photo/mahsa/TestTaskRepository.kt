@@ -1,16 +1,19 @@
-package com.photo.mahsa.data
+package com.photo.mahsa
 
+import com.photo.mahsa.data.Repository
 import com.photo.mahsa.model.Task
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.flowOf
 
 class TestTaskRepository : Repository {
     private val _userData =
         MutableSharedFlow<List<Task>>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
-    private val _data = mutableListOf<Task>()
+
+    private val _data = TestModel.fakeTaskList
+
+
     override fun loadTasks(): Flow<List<Task>> {
         return _userData
     }
@@ -28,7 +31,9 @@ class TestTaskRepository : Repository {
     }
 
     override suspend fun updateTask(task: Task) {
-        TODO("Not yet implemented")
+        val selectedIndex = _data.indexOf(_data.first { it.id == task.id })
+        _data[selectedIndex] = task
+        emitData()
     }
 
     private fun emitData() {_userData.tryEmit(_data)}

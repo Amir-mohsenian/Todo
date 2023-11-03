@@ -1,5 +1,6 @@
 package com.photo.mahsa.ui.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -9,21 +10,36 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.photo.mahsa.App
 import com.photo.mahsa.data.Repository
 import com.photo.mahsa.model.Task
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import com.photo.mahsa.ui.home.UiState.*
+import kotlinx.coroutines.flow.onEach
 
 class HomeViewModel(
     private val repository: Repository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Error(""))
-    val uiState = _uiState.asStateFlow()
+    val uiState: StateFlow<UiState> = repository.loadTasks()
+        .map {Success(it)}
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            Loading
+        )
 
-    init {
+    fun addTask(task: Task) {
         viewModelScope.launch {
+            repository.addTask(task)
+        }
+    }
 
-           // _uiState.value = UiState.Success(data = data)
+    fun updateTask(task: Task) {
+        viewModelScope.launch {
+            repository.updateTask(task)
         }
     }
 
