@@ -39,7 +39,8 @@ fun AddEditTaskScreen(
             })
 
         Button(
-            onClick = { onUpdateTask(mutableTask) },
+            onClick = {
+                onUpdateTask(mutableTask) },
             modifier = Modifier
                 .padding(bottom = 24.dp, start = 20.dp, end = 20.dp)
                 .height(64.dp)

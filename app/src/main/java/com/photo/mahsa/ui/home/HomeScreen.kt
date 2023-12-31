@@ -43,10 +43,23 @@ fun HomeScreen(
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     state = listState,
-                    contentPadding = PaddingValues(top = 8.dp, bottom = 48.dp, start = 8.dp, end = 8.dp),
+                    contentPadding = PaddingValues(
+                        top = 8.dp,
+                        bottom = 48.dp,
+                        start = 8.dp,
+                        end = 8.dp
+                    ),
                 ) {
-                    items(uiState.tasks, key = { key -> key.id!!}) { task ->
-                        ImmutableTaskCard(modifier = Modifier.padding(top = 10.dp).padding(horizontal = 4.dp),task = task, onClick = onSelectedTask)
+                    items(
+                        uiState.tasks.filter { it.title.isNotBlank() || it.desc.isNotBlank() },
+                        key = { key -> key.id!! }) { task ->
+                        ImmutableTaskCard(
+                            modifier = Modifier
+                                .padding(top = 10.dp)
+                                .padding(horizontal = 4.dp),
+                            task = task,
+                            onClick = onSelectedTask
+                        )
                     }
                 }
             }

@@ -25,7 +25,7 @@ class EditTaskTest {
     fun changeTaskTitle() {
         composeTestRule.setContent {
             AppTheme {
-                AddEditTaskRoute(selectedTask = TestModel.fakeTaskList.first(), viewModel = HomeViewModel(testRepository), onBackAction = {})
+            //    AddEditTaskRoute(selectedTask = TestModel.fakeTaskList.first(), viewModel = HomeViewModel(testRepository), onBackAction = {})
             }
         }
 

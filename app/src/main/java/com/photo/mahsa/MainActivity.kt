@@ -20,6 +20,8 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
@@ -51,6 +53,9 @@ class MainActivity : ComponentActivity() {
                 var showFab by remember {
                     mutableStateOf(true)
                 }
+                val snackbarState = remember {
+                    SnackbarHostState()
+                }
 
                 navController.addOnDestinationChangedListener { _, destination, _ ->
                     showFab = destination.route == HOME_ROUTE
@@ -71,6 +76,9 @@ class MainActivity : ComponentActivity() {
                     }) {
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
+                        snackbarHost = {
+                            SnackbarHost(hostState = snackbarState)
+                        },
                         topBar = {
                             CenterAlignedTopAppBar(
                                 title = {
@@ -112,7 +120,8 @@ class MainActivity : ComponentActivity() {
                             TaskNavHost(
                                 navController = navController, modifier = Modifier
                                     .padding(innerPadding)
-                                    .fillMaxSize()
+                                    .fillMaxSize(),
+                                snackbarHostState = snackbarState
                             )
                         }
                     )

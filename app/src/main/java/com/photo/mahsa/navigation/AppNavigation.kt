@@ -1,5 +1,6 @@
 package com.photo.mahsa.navigation
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -13,6 +14,7 @@ const val DETAIL_ROUTE = "detail_route"
 @Composable
 fun TaskNavHost(
     navController: NavHostController,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier,
     startDest: String = HOME_ROUTE,
 ) {
@@ -24,13 +26,13 @@ fun TaskNavHost(
         composable(
             route = HOME_ROUTE
         ) {
-            HomeRoute()
+            HomeRoute(snackbarHostState = snackbarHostState)
         }
 
         composable(
             route = DETAIL_ROUTE
         ) {
-            AddEditTaskRoute(selectedTask = null) {
+            AddEditTaskRoute(selectedTask = null, snackbarHostState = snackbarHostState) {
                 navController.navigateUp()
             }
         }
